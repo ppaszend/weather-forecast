@@ -1,0 +1,11 @@
+.dailyDetails {
+  display: flex;
+}
+
+.row {
+  display: flex;
+}
+
+.temperatureBig {
+  font-size: 48px;
+}
