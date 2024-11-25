@@ -24,7 +24,6 @@ export default tseslint.config(
         'warn',
         { allowConstantExport: true },
       ],
-      'linebreak-style': 0,
     },
   },
 )
