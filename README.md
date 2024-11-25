@@ -11,3 +11,7 @@
 - Changing unit Celsius and Fahrenheit
 - Changing location with search for city
 - Weather conditions should be taken from API (now its from first hour in day)
+
+# Todo refactor
+
+- Line breaks

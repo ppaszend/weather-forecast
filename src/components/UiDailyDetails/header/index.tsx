@@ -1,4 +1,4 @@
-import { getConditionsIcon } from "@/helpers";
+import { getConditionsIcon, getConditionsText } from "@/helpers";
 import styles from "./styles.module.css";
 import { IWeatherDay, IWeatherHour } from "@/interfaces";
 
@@ -31,17 +31,17 @@ export default function Header({ forecast, dateToDisplay }: IProps) {
       </div>
 
       <div style={{ marginLeft: "8px", fontSize: "13px", color: "#BBB" }}>
-        Szansa opadów: {forecast.precipitationProbability}%<br />
-        Wilgotność: {forecast.humidity}%<br />
-        Wiatr: {forecast.windSpeed} km/h
+        Precipitation: {forecast.precipitationProbability}%<br />
+        Humidity: {forecast.humidity}%<br />
+        Wind: {forecast.windSpeed.toFixed()} km/h
       </div>
 
       <div style={{ marginLeft: "auto", textAlign: "right" }}>
-        <div style={{ fontSize: "20px" }}>Pogoda</div>
+        <div style={{ fontSize: "20px" }}>Weather</div>
         <div style={{ color: "#BBB", fontSize: "14px" }}>
           {dateToDisplay}
           <br />
-          {forecast.weatherCode}
+          {getConditionsText(forecast.weatherCode)}
         </div>
       </div>
     </div>

@@ -19,7 +19,7 @@ function calculateIconWidth(windSpeed: number): string {
 
 export default function WindSpeedChart({ hourlyForecast }: IProps) {
   const threeHourForecast = hourlyForecast.filter(
-    (_, index) => index % 3 === 0,
+    (_, index) => (index + 2) % 3 === 0,
   );
 
   return (

@@ -48,19 +48,19 @@ export default function UiDailyDetails({
       <div className={styles.tabsContainer}>
         <TabButton
           isActive={activeTab === Tab.TEMPERATURE}
-          text="Temperatura"
+          text="Temperature"
           onClick={() => setActiveTab(Tab.TEMPERATURE)}
         />
         <span className={styles.tabSeparator} />
         <TabButton
           isActive={activeTab === Tab.PRECIPITATION}
-          text="Szansa opadów"
+          text="Precipitation"
           onClick={() => setActiveTab(Tab.PRECIPITATION)}
         />
         <span className={styles.tabSeparator} />
         <TabButton
           isActive={activeTab === Tab.WIND}
-          text="Wiatr"
+          text="Wind"
           onClick={() => setActiveTab(Tab.WIND)}
         />
       </div>

@@ -13,7 +13,7 @@ export default function getConditionsIcon(conditions?: WeatherCode) {
     case WeatherCode.FOG:
       return "/assets/weather-condition-icons/fog.png";
     case WeatherCode.DEPOSITING_RIME_FOG:
-      return "/assets/weather-condition-icons/.png";
+      return "/assets/weather-condition-icons/fog.png";
     case WeatherCode.DRIZZLE_LIGHT:
       return "/assets/weather-condition-icons/rain-light.png";
     case WeatherCode.DRIZZLE_MODERATE:
