@@ -1,8 +1,20 @@
-import { IWeather } from "@/interfaces";
+import { IWeatherHour } from "@/interfaces";
 import styles from "./styles.module.css";
 
 interface IProps {
-  hourlyForecast: IWeather[];
+  hourlyForecast: IWeatherHour[];
+}
+
+function calculateIconWidth(windSpeed: number): string {
+  if (windSpeed < 12) {
+    return "16px";
+  }
+
+  if (windSpeed < 26) {
+    return "24px";
+  }
+
+  return "36px";
 }
 
 export default function WindSpeedChart({ hourlyForecast }: IProps) {
@@ -15,16 +27,20 @@ export default function WindSpeedChart({ hourlyForecast }: IProps) {
       {threeHourForecast.map(({ windSpeed, windDirection }, index) => (
         <div key={index} className={styles.windSpeedItem}>
           <div className={styles.windSpeedItemText}>
-            {+windSpeed.toFixed(0)} km/h
+            {+windSpeed.toFixed()} km/h
           </div>
-          <img
-            className={styles.windSpeedIcon}
-            style={{
-              transform: `rotate(${windDirection + 90}deg)`,
-            }}
-            src="/assets/wind-direction.svg"
-            alt="Wind direction"
-          />
+          <div className={styles.windSpeedIconWrapper}>
+            <img
+              className={styles.windSpeedIcon}
+              style={{
+                transformOrigin: "50% 50%",
+                transform: `rotate(${windDirection + 90}deg)`,
+                width: calculateIconWidth(windSpeed),
+              }}
+              src="/assets/wind-direction.svg"
+              alt="Wind direction"
+            />
+          </div>
         </div>
       ))}
     </div>

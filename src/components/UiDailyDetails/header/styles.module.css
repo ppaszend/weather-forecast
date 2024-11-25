@@ -9,3 +9,8 @@
 .temperatureBig {
   font-size: 48px;
 }
+
+.conditionsIcon {
+  width: 48px;
+  height: 48px;
+}

@@ -8,7 +8,7 @@ interface IProps {
   date: dayjs.Dayjs;
   avgDay: number;
   avgNight: number;
-  conditions: WeatherCode;
+  conditions?: WeatherCode;
   onClick(date: string): void;
 }
 

@@ -1,14 +1,14 @@
 .precipitationProbabilityContainer {
   display: flex;
   flex-direction: column;
-  margin-bottom: 16px;
-  height: 80px;
+  margin-bottom: 8px;
+  height: 88px;
 }
 
 .upperContainer {
   display: flex;
   width: 100%;
-  justify-content: space-between,
+  justify-content: space-between;
 }
 
 .bottomContainer {
@@ -16,6 +16,7 @@
   width: 100%;
   align-items: flex-end;
   height: 100%;
+  margin-top: 2px;
 }
 
 .precipitationProbabilityItem {
@@ -24,7 +25,6 @@
   align-items: center;
   width: 100%;
   justify-content: flex-end;
-  padding-top: 2px;
   height: 100%;
 }
 

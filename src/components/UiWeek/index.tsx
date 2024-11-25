@@ -1,11 +1,10 @@
 import dayjs, { Dayjs } from "dayjs";
 import UiWeekday from "./weekday";
-import { WeatherCode } from "@/enums";
-import { IWeather } from "@/interfaces";
+import { IWeatherDay } from "@/interfaces";
 import styles from "./styles.module.css";
 
 interface IProps {
-  data: IWeather[];
+  data: IWeatherDay[];
   selectedDate: Dayjs;
   onSelectedDateChange(date: Dayjs): void;
 }
@@ -17,13 +16,13 @@ export default function UiWeek({
 }: IProps) {
   return (
     <div className={styles.week}>
-      {data.map(({ date, temperature }) => (
+      {data.map(({ date, temperatureDay, temperatureNight, weatherCode }) => (
         <UiWeekday
           key={date.unix()}
           date={date}
-          avgDay={temperature}
-          avgNight={5}
-          conditions={WeatherCode.CLEAR_SKY}
+          avgDay={temperatureDay}
+          avgNight={temperatureNight}
+          conditions={weatherCode}
           onClick={() => onSelectedDateChange(date)}
           isActive={dayjs(selectedDate).isSame(date, "day")}
         />

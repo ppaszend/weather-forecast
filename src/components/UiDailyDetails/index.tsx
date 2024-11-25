@@ -1,7 +1,7 @@
 import { useState } from "react";
 import dayjs from "dayjs";
 import Header from "./header";
-import { IWeather } from "@/interfaces";
+import { IWeatherDay, IWeatherHour } from "@/interfaces";
 import TabButton from "./tabButton";
 import {
   TemperatureChart,
@@ -18,8 +18,8 @@ enum Tab {
 }
 
 interface IProps {
-  hourlyForecast: IWeather[];
-  dailyForecast: IWeather;
+  hourlyForecast: IWeatherHour[];
+  dailyForecast: IWeatherDay;
 }
 
 export default function UiDailyDetails({

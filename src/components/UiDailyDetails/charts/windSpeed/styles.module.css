@@ -18,6 +18,8 @@
   font-size: 12px;
 }
 
-.windSpeedIcon {
-  width: 24px;
+.windSpeedIconWrapper {
+  display: flex;
+  align-items: center;
+  height: 36px;
 }

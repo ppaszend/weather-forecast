@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import { getAverage, getWeatherCodeById } from "@/helpers";
-import { IResponse, IWeather } from "@/interfaces";
+import { IResponse, IWeatherDay, IWeatherHour } from "@/interfaces";
+
+const DAY_START_HOUR = 6;
+const NIGHT_START_HOUR = 20;
 
 export default function useWeatherData({
   latitude,
@@ -10,8 +13,8 @@ export default function useWeatherData({
   latitude: number;
   longitude: number;
 }) {
-  const [hourly, setHourly] = useState<IWeather[]>();
-  const [daily, setDaily] = useState<IWeather[]>();
+  const [hourly, setHourly] = useState<IWeatherHour[]>();
+  const [daily, setDaily] = useState<IWeatherDay[]>();
 
   useEffect(() => {
     fetch(
@@ -19,7 +22,7 @@ export default function useWeatherData({
     )
       .then((response) => response.json())
       .then((data: IResponse) => {
-        const _hourly: IWeather[] = data.hourly.time.map((time, index) => ({
+        const _hourly: IWeatherHour[] = data.hourly.time.map((time, index) => ({
           date: dayjs(time),
           precipitationProbability:
             data.hourly.precipitation_probability[index],
@@ -33,32 +36,54 @@ export default function useWeatherData({
           windDirection: data.hourly.wind_direction_10m[index],
         }));
 
-        const _daily: IWeather[] = Object.entries(
+        const _groupedDaily = Object.entries(
           Object.groupBy(_hourly, ({ date }) =>
             date.format("YYYY-MM-DDT00:00:00.000Z"),
           ),
-        ).map(([date, hourly]) => {
-          if (!hourly) {
-            throw new Error("Hourly is undefined");
-          }
+        );
 
-          return {
-            date: dayjs(date),
-            precipitationProbability: +getAverage(
-              hourly.map((w) => w.precipitationProbability),
-            ).toFixed(0),
-            rain: +getAverage(hourly.map((w) => w.rain)).toFixed(0),
-            humidity: +getAverage(hourly.map((w) => w.humidity)).toFixed(0),
-            snowDepth: +getAverage(hourly.map((w) => w.snowDepth)).toFixed(0),
-            snowfall: +getAverage(hourly.map((w) => w.snowfall)).toFixed(0),
-            temperature: +getAverage(hourly.map((w) => w.temperature)).toFixed(
-              0,
-            ),
-            weatherCode: hourly[0].weatherCode,
-            windSpeed: +getAverage(hourly.map((w) => w.windSpeed)).toFixed(0),
-            windDirection: hourly[0].windDirection,
-          };
-        });
+        const _daily: IWeatherDay[] = _groupedDaily.map(
+          ([date, hourly], index) => {
+            if (!hourly) {
+              throw new Error("Hourly is undefined");
+            }
+
+            const weatherDay = hourly.filter(
+              (w) =>
+                w.date.hour() >= DAY_START_HOUR &&
+                w.date.hour() < NIGHT_START_HOUR,
+            );
+
+            const weatherNight = [
+              ...(_groupedDaily[index - 1]?.[1]?.filter(
+                (w) => w.date.hour() >= NIGHT_START_HOUR,
+              ) || []),
+              ...(_groupedDaily[index][1]?.filter(
+                (w) => w.date.hour() < DAY_START_HOUR,
+              ) || []),
+            ];
+
+            return {
+              date: dayjs(date),
+              precipitationProbability: +getAverage(
+                hourly.map((w) => w.precipitationProbability),
+              ).toFixed(),
+              rain: +getAverage(hourly.map((w) => w.rain)).toFixed(),
+              humidity: +getAverage(hourly.map((w) => w.humidity)).toFixed(),
+              snowDepth: +getAverage(hourly.map((w) => w.snowDepth)).toFixed(),
+              snowfall: +getAverage(hourly.map((w) => w.snowfall)).toFixed(),
+              temperatureDay: +getAverage(
+                weatherDay.map((w) => w.temperature),
+              ).toFixed(),
+              temperatureNight: +getAverage(
+                weatherNight.map((w) => w.temperature),
+              ).toFixed(),
+              weatherCode: hourly[0].weatherCode,
+              windSpeed: +getAverage(hourly.map((w) => w.windSpeed)).toFixed(),
+              windDirection: hourly[0].windDirection,
+            };
+          },
+        );
 
         setHourly(_hourly);
         setDaily(_daily);

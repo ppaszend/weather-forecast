@@ -1,8 +1,8 @@
-import { IWeather } from "@/interfaces";
+import { IWeatherHour } from "@/interfaces";
 import styles from "./styles.module.css";
 
 interface IProps {
-  hourlyForecast: IWeather[];
+  hourlyForecast: IWeatherHour[];
 }
 
 export default function PrecipitationProbabilityChart({
@@ -13,10 +13,10 @@ export default function PrecipitationProbabilityChart({
       <div className={styles.upperContainer}>
         {hourlyForecast.map(
           ({ precipitationProbability }, index) =>
-            index % 3 === 0 && (
+            (index + 2) % 3 === 0 && (
               <div key={index} className={styles.precipitationProbabilityItem}>
                 <div className={styles.precipitationProbabilityItemText}>
-                  {+precipitationProbability.toFixed(0)}%
+                  {+precipitationProbability.toFixed()}%
                 </div>
               </div>
             ),
@@ -28,7 +28,7 @@ export default function PrecipitationProbabilityChart({
           <div key={index} className={styles.precipitationProbabilityItem}>
             <div
               className={styles.precipitationProbabilityColumn}
-              style={{ height: `${precipitationProbability}%` }}
+              style={{ height: `${+precipitationProbability.toFixed()}%` }}
             />
           </div>
         ))}

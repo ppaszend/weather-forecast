@@ -8,7 +8,6 @@ interface IWeather {
   humidity: number;
   snowDepth: number;
   snowfall: number;
-  temperature: number;
   weatherCode?: WeatherCode;
   windSpeed: number;
   windDirection: number;

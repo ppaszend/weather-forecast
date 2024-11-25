@@ -1,21 +1,32 @@
-import { WeatherCode } from "@/enums";
 import { getConditionsIcon } from "@/helpers";
 import styles from "./styles.module.css";
-import { IWeather } from "@/interfaces";
+import { IWeatherDay, IWeatherHour } from "@/interfaces";
 
 interface IProps {
-  forecast: IWeather;
+  forecast: IWeatherDay | IWeatherHour;
   dateToDisplay: string;
+}
+
+function getTemperature(forecast: IWeatherDay | IWeatherHour) {
+  if ("temperature" in forecast) {
+    return forecast.temperature.toFixed();
+  }
+
+  if ("temperatureDay" in forecast) {
+    return forecast.temperatureDay.toFixed();
+  }
 }
 
 export default function Header({ forecast, dateToDisplay }: IProps) {
   return (
     <div className={styles.row}>
       <div className={styles.row}>
-        <img src={getConditionsIcon(WeatherCode.CLEAR_SKY)} alt="Clear sky" />
-        <div className={styles.temperatureBig}>
-          {+forecast.temperature.toFixed(0)}
-        </div>
+        <img
+          className={styles.conditionsIcon}
+          src={getConditionsIcon(forecast.weatherCode)}
+          alt={forecast.weatherCode?.toString()}
+        />
+        <div className={styles.temperatureBig}>{getTemperature(forecast)}</div>
         <div>°C</div>|<div style={{ color: "#BBB" }}>°F</div>
       </div>
 
@@ -26,7 +37,7 @@ export default function Header({ forecast, dateToDisplay }: IProps) {
       </div>
 
       <div style={{ marginLeft: "auto", textAlign: "right" }}>
-        <div style={{ fontSize: "24px" }}>Pogoda</div>
+        <div style={{ fontSize: "20px" }}>Pogoda</div>
         <div style={{ color: "#BBB", fontSize: "14px" }}>
           {dateToDisplay}
           <br />
