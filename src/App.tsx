@@ -17,21 +17,23 @@ export default function App() {
     return <div>Loading...</div>;
   }
 
-  const temp = daily.find(({ date }) => date.isSame(selectedDate, "day"));
+  const selectedDateForecast = daily.find(({ date }) =>
+    date.isSame(selectedDate, "day"),
+  );
 
   return (
     <div className={styles.app}>
-      {temp && (
+      {selectedDateForecast && (
         <UiDailyDetails
           hourlyForecast={hourly.filter(({ date }) =>
             date.isSame(selectedDate, "day"),
           )}
-          dailyForecast={temp}
+          dailyForecast={selectedDateForecast}
         />
       )}
       <UiWeek
         data={daily}
-        onSelectedDateChange={(date) => setSelectedDate(date)}
+        onSelectedDateChange={setSelectedDate}
         selectedDate={selectedDate}
       />
     </div>

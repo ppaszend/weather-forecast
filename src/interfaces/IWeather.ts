@@ -11,6 +11,7 @@ interface IWeather {
   temperature: number;
   weatherCode?: WeatherCode;
   windSpeed: number;
+  windDirection: number;
 }
 
 export default IWeather;

@@ -1,0 +1,13 @@
+.tabsContainer {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+  gap: 10px;
+}
+
+.tabSeparator {
+  background-color: #AAA;
+  height: 16px;
+  width: 1px;
+  display: flex;
+}

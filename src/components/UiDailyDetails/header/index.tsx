@@ -1,6 +1,6 @@
 import { WeatherCode } from "@/enums";
 import { getConditionsIcon } from "@/helpers";
-import styles from "./header.module.css";
+import styles from "./styles.module.css";
 import { IWeather } from "@/interfaces";
 
 interface IProps {

@@ -1,0 +1,12 @@
+.tab {
+  background-color: transparent;
+  color: #fff;
+  border: none;
+  padding: 4px 0;
+  height: 32px;
+  cursor: pointer;
+}
+
+.isActive {
+  border-bottom: 3px solid #fdd663;
+}

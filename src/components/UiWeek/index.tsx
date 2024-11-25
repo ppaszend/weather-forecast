@@ -2,6 +2,7 @@ import dayjs, { Dayjs } from "dayjs";
 import UiWeekday from "./weekday";
 import { WeatherCode } from "@/enums";
 import { IWeather } from "@/interfaces";
+import styles from "./styles.module.css";
 
 interface IProps {
   data: IWeather[];
@@ -15,7 +16,7 @@ export default function UiWeek({
   onSelectedDateChange = () => {},
 }: IProps) {
   return (
-    <div style={{ display: "flex", gap: "8px" }}>
+    <div className={styles.week}>
       {data.map(({ date, temperature }) => (
         <UiWeekday
           key={date.unix()}

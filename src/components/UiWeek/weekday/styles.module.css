@@ -3,12 +3,13 @@
   flex-direction: column;
   align-items: center;
   width: 75px;
-  padding: 8px 0;
+  padding: 12px 16px;
   border-radius: 8px;
   color: #fff;
-  gap: 8px;
+  gap: 4px;
   border: none;
   background-color: transparent;
+  cursor: pointer;
 }
 
 .isActive {
@@ -26,4 +27,8 @@
 
 .averageTemperatureNight {
   color: #ccc;
+}
+
+.conditionsIcon {
+  width: 40px;
 }

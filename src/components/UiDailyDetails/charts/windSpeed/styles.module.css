@@ -1,0 +1,23 @@
+.windSpeedContainer {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  height: 80px;
+}
+
+.windSpeedItem {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+}
+
+.windSpeedItemText {
+  font-size: 12px;
+}
+
+.windSpeedIcon {
+  width: 24px;
+}

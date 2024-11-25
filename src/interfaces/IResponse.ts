@@ -18,6 +18,7 @@ interface IResponse {
     snow_depth: string;
     weather_code: string;
     wind_speed_10m: string;
+    wind_direction_10m: string;
   };
   hourly: {
     time: string[];
@@ -29,6 +30,7 @@ interface IResponse {
     snow_depth: number[];
     weather_code: WeatherCode[];
     wind_speed_10m: number[];
+    wind_direction_10m: number[];
   };
 }
 

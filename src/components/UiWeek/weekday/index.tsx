@@ -26,7 +26,11 @@ export default function UiWeekday({
       onClick={() => onClick(date.format("YYYY-MM-DDT00:00:00.000Z"))}
     >
       <div>{date.format("ddd")}.</div>
-      <img src={getConditionsIcon(conditions)} alt="conditions" />
+      <img
+        src={getConditionsIcon(conditions)}
+        alt="conditions"
+        className={styles.conditionsIcon}
+      />
       <div className={styles.averageTemperature}>
         <div className={styles.averageTemperatureDay}>{avgDay}°</div>
         <div className={styles.averageTemperatureNight}>{avgNight}°</div>

@@ -2,6 +2,20 @@ import { useState } from "react";
 import dayjs from "dayjs";
 import Header from "./header";
 import { IWeather } from "@/interfaces";
+import TabButton from "./tabButton";
+import {
+  TemperatureChart,
+  PrecipitationProbabilityChart,
+  WindSpeedChart,
+} from "./charts";
+import styles from "./styles.module.css";
+import Timeline from "./timeline";
+
+enum Tab {
+  TEMPERATURE,
+  PRECIPITATION,
+  WIND,
+}
 
 interface IProps {
   hourlyForecast: IWeather[];
@@ -13,26 +27,59 @@ export default function UiDailyDetails({
   dailyForecast,
 }: IProps) {
   const [selectedHour, setSelectedHour] = useState<dayjs.Dayjs>();
-  const forecast = selectedHour
+  const [activeTab, setActiveTab] = useState<Tab>(Tab.PRECIPITATION);
+
+  const shouldUseSelectedHour =
+    selectedHour && dailyForecast.date.isSame(selectedHour, "day");
+
+  const forecast = shouldUseSelectedHour
     ? hourlyForecast?.find(({ date }) => date.isSame(selectedHour, "hour"))
     : dailyForecast;
-  const dateToDisplay = selectedHour
+
+  const dateToDisplay = shouldUseSelectedHour
     ? dayjs(selectedHour).format("dddd, HH:mm")
     : dayjs(dailyForecast.date).format("dddd");
 
-  if (!forecast) {
-    return;
-  }
+  if (!forecast) return;
 
   return (
     <div>
       <Header forecast={forecast} dateToDisplay={dateToDisplay} />
-
-      {hourlyForecast.map(({ date, temperature }) => (
-        <button key={date.unix()} onClick={() => setSelectedHour(date)}>
-          {date?.format("HH:mm")} | {+temperature.toFixed(0)}°C
-        </button>
-      ))}
+      <div className={styles.tabsContainer}>
+        <TabButton
+          isActive={activeTab === Tab.TEMPERATURE}
+          text="Temperatura"
+          onClick={() => setActiveTab(Tab.TEMPERATURE)}
+        />
+        <span className={styles.tabSeparator} />
+        <TabButton
+          isActive={activeTab === Tab.PRECIPITATION}
+          text="Szansa opadów"
+          onClick={() => setActiveTab(Tab.PRECIPITATION)}
+        />
+        <span className={styles.tabSeparator} />
+        <TabButton
+          isActive={activeTab === Tab.WIND}
+          text="Wiatr"
+          onClick={() => setActiveTab(Tab.WIND)}
+        />
+      </div>
+      {activeTab === Tab.TEMPERATURE && (
+        <TemperatureChart
+          hourlyForecast={hourlyForecast}
+          setSelectedHour={setSelectedHour}
+        />
+      )}
+      {activeTab === Tab.PRECIPITATION && (
+        <PrecipitationProbabilityChart hourlyForecast={hourlyForecast} />
+      )}
+      {activeTab === Tab.WIND && (
+        <WindSpeedChart hourlyForecast={hourlyForecast} />
+      )}
+      <Timeline
+        hourlyForecast={hourlyForecast}
+        setSelectedHour={setSelectedHour}
+      />
     </div>
   );
 }

@@ -1,0 +1,7 @@
+.week {
+  display: flex;
+  gap: 1px;
+  overflow-x: scroll;
+  scrollbar-color: #444 transparent;
+  scrollbar-width: thin;
+}

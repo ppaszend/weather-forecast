@@ -1,0 +1,39 @@
+.precipitationProbabilityContainer {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+  height: 80px;
+}
+
+.upperContainer {
+  display: flex;
+  width: 100%;
+  justify-content: space-between,
+}
+
+.bottomContainer {
+  display: flex;
+  width: 100%;
+  align-items: flex-end;
+  height: 100%;
+}
+
+.precipitationProbabilityItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  justify-content: flex-end;
+  padding-top: 2px;
+  height: 100%;
+}
+
+.precipitationProbabilityColumn {
+  background-color: #1e3559;
+  border-top: 2px solid #8ab4f8;
+  width: 100%;
+}
+
+.precipitationProbabilityItemText {
+  font-size: 12px;
+}
