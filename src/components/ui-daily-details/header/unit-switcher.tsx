@@ -1,4 +1,4 @@
-import styles from "./styles.module.css";
+import styles from "./unit-switcher.module.css";
 import { temperatureUnit } from "@/types";
 
 export default function UnitSwitcher({

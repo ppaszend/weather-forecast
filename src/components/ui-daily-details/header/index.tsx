@@ -36,15 +36,15 @@ export default function Header({ forecast, dateToDisplay }: IProps) {
         <UnitSwitcher value={temperatureUnit} onChange={setTemperatureUnit} />
       </div>
 
-      <div style={{ marginLeft: "8px", fontSize: "13px", color: "#BBB" }}>
+      <div className={styles.weatherDescription}>
         Precipitation: {forecast.precipitationProbability}%<br />
         Humidity: {forecast.humidity}%<br />
         Wind: {forecast.windSpeed.toFixed()} km/h
       </div>
 
-      <div style={{ marginLeft: "auto", textAlign: "right" }}>
-        <div style={{ fontSize: "20px" }}>Weather</div>
-        <div style={{ color: "#BBB", fontSize: "14px" }}>
+      <div className={styles.rightContainer}>
+        <div className={styles.rightContainerTitle}>Weather</div>
+        <div className={styles.rightContainerDate}>
           {dateToDisplay}
           <br />
           {getConditionsText(forecast.weatherCode)}

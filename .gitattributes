@@ -28,7 +28,7 @@
 *.sh            text    eol=lf
 *.tld           text    eol=lf
 *.ts            text    eol=lf
-*.tsx            text    eol=lf
+*.tsx           text    eol=lf
 *.txt           text    eol=lf
 *.xml           text    eol=lf
 

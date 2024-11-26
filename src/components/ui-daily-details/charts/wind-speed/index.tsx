@@ -31,9 +31,7 @@ export default function WindSpeedChart({ hourlyForecast }: IProps) {
           </div>
           <div className={styles.windSpeedIconWrapper}>
             <img
-              className={styles.windSpeedIcon}
               style={{
-                transformOrigin: "50% 50%",
                 transform: `rotate(${windDirection + 90}deg)`,
                 width: calculateIconWidth(windSpeed),
               }}
