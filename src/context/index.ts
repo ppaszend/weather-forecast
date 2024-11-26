@@ -1,1 +1,1 @@
-export { default as TemperatureContext } from "./TemperatureContext";
+export { default as TemperatureContext } from "./temperature-context";

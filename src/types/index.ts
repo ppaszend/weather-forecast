@@ -1,1 +1,1 @@
-export { type default as temperatureUnit } from "./temperatureUnit";
+export { type default as temperatureUnit } from "./temperature-unit";

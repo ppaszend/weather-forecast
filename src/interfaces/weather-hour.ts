@@ -1,4 +1,4 @@
-import IWeather from "./IWeather";
+import IWeather from "./weather";
 
 interface IWeatherHour extends IWeather {
   temperature: number;

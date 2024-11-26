@@ -1,4 +1,4 @@
-export { default as getAverage } from "./getAverage";
-export { default as getConditionsIcon } from "./getConditionsIcon";
-export { default as getConditionsText } from "./getConditionsText";
-export { default as getWeatherCodeById } from "./getWeatherCodeById";
+export { default as getAverage } from "./get-average";
+export { default as getConditionsIcon } from "./get-conditions-icon";
+export { default as getConditionsText } from "./get-conditions-text";
+export { default as getWeatherCodeById } from "./get-weather-code-by-id";

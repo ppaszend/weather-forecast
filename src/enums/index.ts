@@ -1,1 +1,1 @@
-export { default as WeatherCode } from "./WeatherCode";
+export { default as WeatherCode } from "./weather-code";

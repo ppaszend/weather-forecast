@@ -2,7 +2,7 @@ import { useState } from "react";
 import dayjs from "dayjs";
 import Header from "./header";
 import { IWeatherDay, IWeatherHour } from "@/interfaces";
-import TabButton from "./tabButton";
+import TabButton from "./tab-button";
 import {
   TemperatureChart,
   PrecipitationProbabilityChart,

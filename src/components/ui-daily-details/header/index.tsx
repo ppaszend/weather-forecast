@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { getConditionsIcon, getConditionsText } from "@/helpers";
 import { IWeatherDay, IWeatherHour } from "@/interfaces";
 import { TemperatureContext } from "@/context";
-import UnitSwitcher from "./unitSwitcher";
+import UnitSwitcher from "./unit-switcher";
 import styles from "./styles.module.css";
 
 interface IProps {

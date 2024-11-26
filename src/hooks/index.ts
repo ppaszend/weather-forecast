@@ -1,1 +1,1 @@
-export { default as useWeatherData } from "./useWeatherData";
+export { default as useWeatherData } from "./use-weather-data";
