@@ -25,7 +25,7 @@ export default function UiWeekday({
       className={[styles.weekday, isActive && styles.isActive].join(" ")}
       onClick={() => onClick(date.format("YYYY-MM-DDT00:00:00.000Z"))}
     >
-      <div>{date.format("ddd")}.</div>
+      <div>{date.format("ddd")}</div>
       <img
         src={getConditionsIcon(conditions)}
         alt="conditions"

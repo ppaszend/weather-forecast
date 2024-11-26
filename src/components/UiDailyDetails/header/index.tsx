@@ -1,6 +1,9 @@
+import { useContext } from "react";
 import { getConditionsIcon, getConditionsText } from "@/helpers";
-import styles from "./styles.module.css";
 import { IWeatherDay, IWeatherHour } from "@/interfaces";
+import { TemperatureContext } from "@/context";
+import UnitSwitcher from "./unitSwitcher";
+import styles from "./styles.module.css";
 
 interface IProps {
   forecast: IWeatherDay | IWeatherHour;
@@ -18,6 +21,9 @@ function getTemperature(forecast: IWeatherDay | IWeatherHour) {
 }
 
 export default function Header({ forecast, dateToDisplay }: IProps) {
+  const { temperatureUnit, setTemperatureUnit } =
+    useContext(TemperatureContext);
+
   return (
     <div className={styles.row}>
       <div className={styles.row}>
@@ -27,7 +33,7 @@ export default function Header({ forecast, dateToDisplay }: IProps) {
           alt={forecast.weatherCode?.toString()}
         />
         <div className={styles.temperatureBig}>{getTemperature(forecast)}</div>
-        <div>°C</div>|<div style={{ color: "#BBB" }}>°F</div>
+        <UnitSwitcher value={temperatureUnit} onChange={setTemperatureUnit} />
       </div>
 
       <div style={{ marginLeft: "8px", fontSize: "13px", color: "#BBB" }}>
