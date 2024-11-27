@@ -15,4 +15,8 @@ export default defineConfig({
       "@": root,
     } as AliasOptions,
   },
+  build: {
+    outDir: "../dist",
+    emptyOutDir: true,
+  },
 });

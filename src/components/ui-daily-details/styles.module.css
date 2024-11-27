@@ -11,3 +11,13 @@
   width: 1px;
   display: flex;
 }
+
+.chartsScroll {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.chartsWrapper {
+  overflow-x: auto;
+  min-width: 550px;
+}

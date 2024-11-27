@@ -64,22 +64,26 @@ export default function UiDailyDetails({
           onClick={() => setActiveTab(Tab.WIND)}
         />
       </div>
-      {activeTab === Tab.TEMPERATURE && (
-        <TemperatureChart
-          hourlyForecast={hourlyForecast}
-          setSelectedHour={setSelectedHour}
-        />
-      )}
-      {activeTab === Tab.PRECIPITATION && (
-        <PrecipitationProbabilityChart hourlyForecast={hourlyForecast} />
-      )}
-      {activeTab === Tab.WIND && (
-        <WindSpeedChart hourlyForecast={hourlyForecast} />
-      )}
-      <Timeline
-        hourlyForecast={hourlyForecast}
-        setSelectedHour={setSelectedHour}
-      />
+      <div className={styles.chartsScroll}>
+        <div className={styles.chartsWrapper}>
+          {activeTab === Tab.TEMPERATURE && (
+            <TemperatureChart
+              hourlyForecast={hourlyForecast}
+              setSelectedHour={setSelectedHour}
+            />
+          )}
+          {activeTab === Tab.PRECIPITATION && (
+            <PrecipitationProbabilityChart hourlyForecast={hourlyForecast} />
+          )}
+          {activeTab === Tab.WIND && (
+            <WindSpeedChart hourlyForecast={hourlyForecast} />
+          )}
+          <Timeline
+            hourlyForecast={hourlyForecast}
+            setSelectedHour={setSelectedHour}
+          />
+        </div>
+      </div>
     </div>
   );
 }
