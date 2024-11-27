@@ -1,7 +1,7 @@
 import { useState } from "react";
 import dayjs from "dayjs";
 import { useWeatherData } from "@/hooks";
-import { UiDailyDetails, UiWeek } from "@/components";
+import { UiDailyDetails, UiSpinner, UiWeek } from "@/components";
 import styles from "./styles.module.css";
 import { temperatureUnit } from "@/types";
 import { TemperatureContext } from "./context";
@@ -20,7 +20,11 @@ export default function App() {
   });
 
   if (!hourly || !daily) {
-    return <div>Loading...</div>;
+    return (
+      <div className={styles.app}>
+        <UiSpinner />
+      </div>
+    );
   }
 
   const selectedDateForecast = daily.find(({ date }) =>

@@ -1,6 +1,14 @@
 import { WeatherCode } from "@/enums";
 
 interface IResponse {
+  daily: {
+    time: string[];
+    weather_code: number[];
+  };
+  daily_units: {
+    time: string;
+    weather_code: string;
+  };
   latitude: number;
   longitude: number;
   generationtime_ms: number;

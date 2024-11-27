@@ -21,7 +21,7 @@ export default function useWeatherData({
 
   useEffect(() => {
     fetch(
-      `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m,relative_humidity_2m,precipitation_probability,rain,snowfall,snow_depth,weather_code,wind_speed_10m,wind_direction_10m&forecast_days=14&temperature_unit=${temperatureUnit}`,
+      `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m,relative_humidity_2m,precipitation_probability,rain,snowfall,snow_depth,weather_code,wind_speed_10m,wind_direction_10m&daily=weather_code&forecast_days=14&temperature_unit=${temperatureUnit}`,
     )
       .then((response) => response.json())
       .then((data: IResponse) => {
@@ -38,6 +38,11 @@ export default function useWeatherData({
           windSpeed: data.hourly.wind_speed_10m[index],
           windDirection: data.hourly.wind_direction_10m[index],
         }));
+
+        function getDailyWeatherCode(day: string) {
+          const _index = data.daily.time.indexOf(day);
+          return data.daily.weather_code[_index];
+        }
 
         const _groupedDaily = Object.entries(
           Object.groupBy(_hourly, ({ date }) =>
@@ -81,7 +86,9 @@ export default function useWeatherData({
               temperatureNight: +getAverage(
                 weatherNight.map((w) => w.temperature),
               ).toFixed(),
-              weatherCode: hourly[0].weatherCode,
+              weatherCode: getDailyWeatherCode(
+                dayjs(date).format("YYYY-MM-DD"),
+              ),
               windSpeed: +getAverage(hourly.map((w) => w.windSpeed)).toFixed(),
               windDirection: hourly[0].windDirection,
             };
