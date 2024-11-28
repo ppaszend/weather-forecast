@@ -53,10 +53,10 @@ export default function getConditionsIcon(conditions?: WeatherCode) {
     case WeatherCode.SNOW_SHOWERS_HEAVY:
       return "/assets/weather-condition-icons/snow.png";
     case WeatherCode.THUNDERSTORM_SLIGHT_OR_MODERATE:
-      return "/assets/weather-condition-icons/.png";
+      return "/assets/weather-condition-icons/rain-and-thunderstorm.png";
     case WeatherCode.THUNDERSTORM_WITH_SLIGHT_RAIL:
-      return "/assets/weather-condition-icons/.png";
+      return "/assets/weather-condition-icons/rain-and-thunderstorm.png";
     case WeatherCode.THUNDERSTORM_WITH_HEAVY_RAIL:
-      return "/assets/weather-condition-icons/.png";
+      return "/assets/weather-condition-icons/rain-and-thunderstorm.png";
   }
 }
