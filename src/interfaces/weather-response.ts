@@ -1,6 +1,6 @@
 import { WeatherCode } from "@/enums";
 
-interface IResponse {
+interface IWeatherResponse {
   daily: {
     time: string[];
     weather_code: number[];
@@ -42,4 +42,4 @@ interface IResponse {
   };
 }
 
-export default IResponse;
+export default IWeatherResponse;

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import { getAverage, getWeatherCodeById } from "@/helpers";
-import { IResponse, IWeatherDay, IWeatherHour } from "@/interfaces";
+import { IWeatherResponse, IWeatherDay, IWeatherHour } from "@/interfaces";
 import { temperatureUnit } from "@/types";
 
 const DAY_START_HOUR = 6;
@@ -10,21 +10,29 @@ const NIGHT_START_HOUR = 20;
 export default function useWeatherData({
   latitude,
   longitude,
-  temperatureUnit = "celsius",
+  temperatureUnit,
 }: {
-  latitude: number;
-  longitude: number;
+  latitude: number | undefined;
+  longitude: number | undefined;
   temperatureUnit: temperatureUnit;
 }) {
-  const [hourly, setHourly] = useState<IWeatherHour[]>();
-  const [daily, setDaily] = useState<IWeatherDay[]>();
+  const [weatherData, setWeatherData] = useState<{
+    daily: IWeatherDay[];
+    hourly: IWeatherHour[];
+  }>();
 
   useEffect(() => {
+    setWeatherData(undefined);
+
+    if (!latitude || !longitude) {
+      return;
+    }
+
     fetch(
       `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m,relative_humidity_2m,precipitation_probability,rain,snowfall,snow_depth,weather_code,wind_speed_10m,wind_direction_10m&daily=weather_code&forecast_days=14&temperature_unit=${temperatureUnit}`,
     )
       .then((response) => response.json())
-      .then((data: IResponse) => {
+      .then((data: IWeatherResponse) => {
         const _hourly: IWeatherHour[] = data.hourly.time.map((time, index) => ({
           date: dayjs(time),
           precipitationProbability:
@@ -95,10 +103,9 @@ export default function useWeatherData({
           },
         );
 
-        setHourly(_hourly);
-        setDaily(_daily);
+        setWeatherData({ hourly: _hourly, daily: _daily });
       });
   }, [latitude, longitude, temperatureUnit]);
 
-  return { hourly, daily };
+  return { weatherData };
 }

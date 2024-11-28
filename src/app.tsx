@@ -1,54 +1,38 @@
 import { useState } from "react";
-import dayjs from "dayjs";
-import { useWeatherData } from "@/hooks";
-import { UiDailyDetails, UiSpinner, UiWeek } from "@/components";
-import styles from "./styles.module.css";
+import { TemperatureContext } from "@/context";
+import { UiSearchInput, UiWeather } from "@/components";
+import { useWeatherData, useCitySearch } from "@/hooks";
 import { temperatureUnit } from "@/types";
-import { TemperatureContext } from "./context";
+import { ICity } from "@/interfaces";
+import styles from "./styles.module.css";
 
 export default function App() {
-  const [selectedDate, setSelectedDate] = useState(
-    dayjs(dayjs().format("YYYY-MM-DDT00:00:00.000Z")),
-  );
+  const [citySearchQuery, setCitySearchQuery] = useState<string>("");
+  const [selectedCity, setSelectedCity] = useState<ICity | undefined>();
   const [temperatureUnit, setTemperatureUnit] =
     useState<temperatureUnit>("celsius");
 
-  const { hourly, daily } = useWeatherData({
-    latitude: 50.1,
-    longitude: 18.54,
+  const { weatherData } = useWeatherData({
+    latitude: selectedCity?.latitude,
+    longitude: selectedCity?.longitude,
     temperatureUnit,
   });
 
-  if (!hourly || !daily) {
-    return (
-      <div className={styles.app}>
-        <UiSpinner />
-      </div>
-    );
-  }
-
-  const selectedDateForecast = daily.find(({ date }) =>
-    date.isSame(selectedDate, "day"),
-  );
+  const { results } = useCitySearch({ query: citySearchQuery });
 
   return (
     <TemperatureContext.Provider
       value={{ temperatureUnit, setTemperatureUnit }}
     >
       <div className={styles.app}>
-        {selectedDateForecast && (
-          <UiDailyDetails
-            hourlyForecast={hourly.filter(({ date }) =>
-              date.isSame(selectedDate, "day"),
-            )}
-            dailyForecast={selectedDateForecast}
-          />
-        )}
-        <UiWeek
-          data={daily}
-          onSelectedDateChange={setSelectedDate}
-          selectedDate={selectedDate}
+        <UiSearchInput
+          citySearchQuery={citySearchQuery}
+          setCitySearchQuery={setCitySearchQuery}
+          results={results}
+          setSelectedCity={setSelectedCity}
+          selectedCity={selectedCity}
         />
+        <UiWeather weatherData={weatherData} />
       </div>
     </TemperatureContext.Provider>
   );
