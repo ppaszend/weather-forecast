@@ -12,7 +12,7 @@ export default function App() {
   const [temperatureUnit, setTemperatureUnit] =
     useState<temperatureUnit>("celsius");
 
-  const { weatherData } = useWeatherData({
+  const { weatherData, isLoading } = useWeatherData({
     latitude: selectedCity?.latitude,
     longitude: selectedCity?.longitude,
     temperatureUnit,
@@ -32,7 +32,7 @@ export default function App() {
           setSelectedCity={setSelectedCity}
           selectedCity={selectedCity}
         />
-        <UiWeather weatherData={weatherData} />
+        <UiWeather isLoading={isLoading} weatherData={weatherData} />
       </div>
     </TemperatureContext.Provider>
   );

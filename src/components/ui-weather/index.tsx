@@ -11,9 +11,10 @@ interface IProps {
         hourly: IWeatherHour[];
       }
     | undefined;
+  isLoading: boolean;
 }
 
-export default function UiWeather({ weatherData }: IProps) {
+export default function UiWeather({ weatherData, isLoading }: IProps) {
   const [selectedDate, setSelectedDate] = useState(
     dayjs(dayjs().format("YYYY-MM-DDT00:00:00.000Z")),
   );
@@ -22,11 +23,13 @@ export default function UiWeather({ weatherData }: IProps) {
     date.isSame(selectedDate, "day"),
   );
 
+  if (isLoading) {
+    return <UiSpinner />;
+  }
+
   if (!weatherData) {
     return (
-      <div className={styles.app}>
-        <UiSpinner />
-      </div>
+      <div className={styles.hint}>Select city to display weather forecast</div>
     );
   }
 

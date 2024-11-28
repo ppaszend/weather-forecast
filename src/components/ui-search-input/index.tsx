@@ -42,6 +42,7 @@ export default function UiSearchInput({
         }
         onChange={(e) => setCitySearchQuery(e.target.value)}
         className={styles.searchInput}
+        placeholder="Type city name..."
       />
       <div className={styles.hintsContainer}>
         <div className={styles.separator} />

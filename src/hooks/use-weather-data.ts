@@ -20,13 +20,17 @@ export default function useWeatherData({
     daily: IWeatherDay[];
     hourly: IWeatherHour[];
   }>();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     setWeatherData(undefined);
 
     if (!latitude || !longitude) {
+      setIsLoading(false);
       return;
     }
+
+    setIsLoading(true);
 
     fetch(
       `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m,relative_humidity_2m,precipitation_probability,rain,snowfall,snow_depth,weather_code,wind_speed_10m,wind_direction_10m&daily=weather_code&forecast_days=14&temperature_unit=${temperatureUnit}`,
@@ -104,8 +108,9 @@ export default function useWeatherData({
         );
 
         setWeatherData({ hourly: _hourly, daily: _daily });
+        setIsLoading(false);
       });
   }, [latitude, longitude, temperatureUnit]);
 
-  return { weatherData };
+  return { weatherData, isLoading };
 }
