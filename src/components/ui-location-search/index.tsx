@@ -22,7 +22,7 @@ export default function UiLocationSearch({
   const { results } = useCitySearch({ searchQuery });
   const searchInputRef = useRef<HTMLInputElement>(null);
 
-  useEffect(localizeByIpAddress, []);
+  useEffect(localizeByIpAddress, [onLocationChange]);
 
   function localizeByIpAddress() {
     getLocationFromIpAddress().then((location) => {
@@ -38,6 +38,7 @@ export default function UiLocationSearch({
         onLocationChange(location);
         setSearchQuery(location.label);
         setIsFocused(false);
+        searchInputRef.current?.blur();
       });
   }
 

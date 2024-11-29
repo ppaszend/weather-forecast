@@ -11,6 +11,7 @@ interface IProps {
 
 interface ITest {
   focus(): void;
+  blur(): void;
 }
 
 function SearchInput(
@@ -22,6 +23,9 @@ function SearchInput(
   useImperativeHandle(ref, () => ({
     focus() {
       inputRef.current?.focus();
+    },
+    blur() {
+      inputRef.current?.blur();
     },
   }));
 
