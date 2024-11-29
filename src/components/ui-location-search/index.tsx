@@ -37,6 +37,7 @@ export default function UiLocationSearch({
       .then((location) => {
         onLocationChange(location);
         setSearchQuery(location.label);
+        setIsFocused(false);
       });
   }
 
