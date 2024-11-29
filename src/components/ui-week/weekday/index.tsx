@@ -1,11 +1,12 @@
 import { getConditionsIcon } from "@/helpers";
 import styles from "./styles.module.css";
-import dayjs from "dayjs";
+import { Dayjs } from "dayjs";
 import { WeatherCode } from "@/enums";
+import classNames from "classnames";
 
 interface IProps {
   isActive: boolean;
-  date: dayjs.Dayjs;
+  date: Dayjs;
   avgDay: number;
   avgNight: number;
   conditions?: WeatherCode;
@@ -22,7 +23,7 @@ export default function UiWeekday({
 }: IProps) {
   return (
     <button
-      className={[styles.weekday, isActive && styles.isActive].join(" ")}
+      className={classNames(styles.weekday, { [styles.isActive]: isActive })}
       onClick={() => onClick(date.format("YYYY-MM-DDT00:00:00.000Z"))}
     >
       <div>{date.format("ddd")}</div>

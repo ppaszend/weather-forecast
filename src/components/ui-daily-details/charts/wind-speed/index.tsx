@@ -35,7 +35,7 @@ export default function WindSpeedChart({ hourlyForecast }: IProps) {
                 transform: `rotate(${windDirection + 90}deg)`,
                 width: calculateIconWidth(windSpeed),
               }}
-              src="/assets/wind-direction.svg"
+              src="/assets/icons/wind-direction.svg"
               alt="Wind direction"
             />
           </div>

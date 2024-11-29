@@ -1,37 +1,27 @@
 import { useState } from "react";
 import { TemperatureContext } from "@/context";
-import { UiSearchInput, UiWeather } from "@/components";
-import { useWeatherData, useCitySearch } from "@/hooks";
+import { UiLocationSearch, UiWeather } from "@/components";
+import { useWeatherData } from "@/hooks";
 import { temperatureUnit } from "@/types";
-import { ICity } from "@/interfaces";
+import { ILocation } from "@/interfaces";
 import styles from "./styles.module.css";
 
 export default function App() {
-  const [citySearchQuery, setCitySearchQuery] = useState<string>("");
-  const [selectedCity, setSelectedCity] = useState<ICity | undefined>();
+  const [location, setLocation] = useState<ILocation>();
   const [temperatureUnit, setTemperatureUnit] =
     useState<temperatureUnit>("celsius");
 
   const { weatherData, isLoading } = useWeatherData({
-    latitude: selectedCity?.latitude,
-    longitude: selectedCity?.longitude,
+    location,
     temperatureUnit,
   });
-
-  const { results } = useCitySearch({ query: citySearchQuery });
 
   return (
     <TemperatureContext.Provider
       value={{ temperatureUnit, setTemperatureUnit }}
     >
       <div className={styles.app}>
-        <UiSearchInput
-          citySearchQuery={citySearchQuery}
-          setCitySearchQuery={setCitySearchQuery}
-          results={results}
-          setSelectedCity={setSelectedCity}
-          selectedCity={selectedCity}
-        />
+        <UiLocationSearch location={location} onLocationChange={setLocation} />
         <UiWeather isLoading={isLoading} weatherData={weatherData} />
       </div>
     </TemperatureContext.Provider>

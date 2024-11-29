@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import styles from "./styles.module.css";
 
 interface ITabButtonProps {
@@ -13,7 +14,7 @@ export default function TabButton({
 }: ITabButtonProps) {
   return (
     <button
-      className={[styles.tab, isActive && styles.isActive].join(" ")}
+      className={classNames(styles.tab, { [styles.isActive]: isActive })}
       onClick={onClick}
     >
       {text}
