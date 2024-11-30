@@ -4,7 +4,6 @@ import { UiLocationSearch, UiWeather } from "@/components";
 import { useWeatherData } from "@/hooks";
 import { temperatureUnit } from "@/types";
 import { ILocation } from "@/interfaces";
-import styles from "./styles.module.css";
 
 export default function App() {
   const [location, setLocation] = useState<ILocation>();
@@ -20,7 +19,7 @@ export default function App() {
     <TemperatureContext.Provider
       value={{ temperatureUnit, setTemperatureUnit }}
     >
-      <div className={styles.app}>
+      <div className="app">
         <UiLocationSearch location={location} onLocationChange={setLocation} />
         <UiWeather isLoading={isLoading} weatherData={weatherData} />
       </div>
