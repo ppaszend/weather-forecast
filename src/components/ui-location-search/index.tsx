@@ -1,5 +1,5 @@
 import { ILocation } from "@/interfaces";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { getCoordsFromBrowserLocation } from "@/helpers";
 import styles from "./styles.module.css";
 import { useCitySearch } from "@/hooks";
@@ -22,16 +22,14 @@ export default function UiLocationSearch({
   const { results } = useCitySearch({ searchQuery });
   const searchInputRef = useRef<HTMLInputElement>(null);
 
-  useEffect(localizeByIpAddress, [onLocationChange]);
-
-  function localizeByIpAddress() {
+  const localizeByIpAddress = useCallback(() => {
     getLocationFromIpAddress().then((location) => {
       onLocationChange(location);
       setSearchQuery(location.label);
     });
-  }
+  }, [onLocationChange]);
 
-  function localizeByBrowser() {
+  const localizeByBrowser = useCallback(() => {
     getCoordsFromBrowserLocation()
       .then(getLocationFromCoordinates)
       .then((location) => {
@@ -40,7 +38,17 @@ export default function UiLocationSearch({
         setIsFocused(false);
         searchInputRef.current?.blur();
       });
-  }
+  }, [onLocationChange]);
+
+  useEffect(() => {
+    navigator.permissions.query({ name: "geolocation" }).then(({ state }) => {
+      if (state === "granted") {
+        localizeByBrowser();
+      } else {
+        localizeByIpAddress();
+      }
+    });
+  }, [localizeByBrowser, localizeByIpAddress]);
 
   function onResultClicked(location: ILocation) {
     onLocationChange(location);
