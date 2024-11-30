@@ -9,14 +9,14 @@ interface IProps {
   onLocalizeMe(): void;
 }
 
-interface ITest {
+interface IRef {
   focus(): void;
   blur(): void;
 }
 
 function SearchInput(
   { value, onChange, onLocalizeMe }: IProps,
-  ref: ForwardedRef<ITest>,
+  ref: ForwardedRef<IRef>,
 ) {
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -56,4 +56,4 @@ function SearchInput(
   );
 }
 
-export default forwardRef<ITest, IProps>(SearchInput);
+export default forwardRef<IRef, IProps>(SearchInput);

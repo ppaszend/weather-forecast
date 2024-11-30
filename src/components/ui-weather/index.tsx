@@ -5,12 +5,10 @@ import { IWeatherDay, IWeatherHour } from "@/interfaces";
 import styles from "./styles.module.css";
 
 interface IProps {
-  weatherData:
-    | {
-        daily: IWeatherDay[];
-        hourly: IWeatherHour[];
-      }
-    | undefined;
+  weatherData?: {
+    daily: IWeatherDay[];
+    hourly: IWeatherHour[];
+  };
   isLoading: boolean;
 }
 
@@ -44,8 +42,8 @@ export default function UiWeather({ weatherData, isLoading }: IProps) {
         />
       )}
       <UiWeek
-        data={weatherData.daily}
-        onSelectedDateChange={setSelectedDate}
+        weatherForecast={weatherData.daily}
+        onDateChange={setSelectedDate}
         selectedDate={selectedDate}
       />
     </>

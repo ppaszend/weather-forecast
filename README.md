@@ -17,12 +17,12 @@
 
 # Todo features:
 
-- Default location should be based on IP address (https://www.geoapify.com/ip-geolocation-api/)
+- Default location should be based on IP address (https://www.geoapify.com/ip-geolocation-api/) 👍
 - Scrolling weekdays by pan on desktop
 - Last day of week visible on screen should be visible little from the left, so user knows that there is more weekdays
 - Animation on charts when changing weekdays
-- Getting location from browser (Add button with "My Location" icon from google icons) (https://www.geoapify.com/reverse-geocoding-api/)
-- Button to delete text in search (icon: "Close" from google icons)
+- Getting location from browser (Add button with "My Location" icon from google icons) (https://www.geoapify.com/reverse-geocoding-api/) 👍
+- Button to delete text in search (icon: "Close" from google icons) 👍
 - Highlight actual city in search hints
 - Light theme and button to change theme (needs to refactor colors and make them variables)
 

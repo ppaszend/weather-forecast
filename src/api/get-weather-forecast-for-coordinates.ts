@@ -1,12 +1,50 @@
 import dayjs from "dayjs";
-import {
-  ICoordinates,
-  IWeatherResponse,
-  IWeatherHour,
-  IWeatherDay,
-} from "@/interfaces";
+import { ICoordinates, IWeatherHour, IWeatherDay } from "@/interfaces";
 import { getWeatherCodeById, getAverage } from "@/helpers";
+import { WeatherCode } from "@/enums";
 import { temperatureUnit } from "@/types";
+
+interface IResponse {
+  daily: {
+    time: string[];
+    weather_code: number[];
+  };
+  daily_units: {
+    time: string;
+    weather_code: string;
+  };
+  latitude: number;
+  longitude: number;
+  generationtime_ms: number;
+  utc_offset_seconds: number;
+  timezone: string;
+  timezone_abbreviation: string;
+  elevation: number;
+  hourly_units: {
+    time: string;
+    temperature_2m: string;
+    relative_humidity_2m: string;
+    precipitation_probability: string;
+    rain: string;
+    snowfall: string;
+    snow_depth: string;
+    weather_code: string;
+    wind_speed_10m: string;
+    wind_direction_10m: string;
+  };
+  hourly: {
+    time: string[];
+    temperature_2m: number[];
+    relative_humidity_2m: number[];
+    precipitation_probability: number[];
+    rain: number[];
+    snowfall: number[];
+    snow_depth: number[];
+    weather_code: WeatherCode[];
+    wind_speed_10m: number[];
+    wind_direction_10m: number[];
+  };
+}
 
 const DAY_START_HOUR = 6;
 const NIGHT_START_HOUR = 20;
@@ -16,11 +54,32 @@ export default function getWeatherForecastForCoordinates(
   options: { temperatureUnit: temperatureUnit },
 ): Promise<{ hourly: IWeatherHour[]; daily: IWeatherDay[] }> {
   return new Promise((resolve, reject) => {
-    fetch(
-      `https://api.open-meteo.com/v1/forecast?latitude=${coordinates.latitude}&longitude=${coordinates.longitude}&hourly=temperature_2m,relative_humidity_2m,precipitation_probability,rain,snowfall,snow_depth,weather_code,wind_speed_10m,wind_direction_10m&daily=weather_code&forecast_days=14&temperature_unit=${options.temperatureUnit}`,
-    )
+    const searchParams = new URLSearchParams({
+      latitude: coordinates.latitude.toString(),
+      longitude: coordinates.longitude.toString(),
+      hourly: [
+        "temperature_2m",
+        "relative_humidity_2m",
+        "precipitation_probability",
+        "rain",
+        "snowfall",
+        "snow_depth",
+        "weather_code",
+        "wind_speed_10m",
+        "wind_direction_10m",
+      ].join(","),
+      daily: "weather_code",
+      forecast_days: "14",
+      temperature_unit: options.temperatureUnit,
+    });
+
+    const url = new URL(
+      "https://api.open-meteo.com/v1/forecast?" + searchParams,
+    );
+
+    fetch(url)
       .then((response) => response.json())
-      .then((data: IWeatherResponse) => {
+      .then((data: IResponse) => {
         const _hourly: IWeatherHour[] = data.hourly.time.map((time, index) => ({
           date: dayjs(time),
           precipitationProbability:

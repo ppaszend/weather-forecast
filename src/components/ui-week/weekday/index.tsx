@@ -1,26 +1,22 @@
-import { getConditionsIcon } from "@/helpers";
-import styles from "./styles.module.css";
-import { Dayjs } from "dayjs";
-import { WeatherCode } from "@/enums";
 import classNames from "classnames";
+import { getConditionsIcon } from "@/helpers";
+import { IWeatherDay } from "@/interfaces";
+import styles from "./styles.module.css";
 
 interface IProps {
   isActive: boolean;
-  date: Dayjs;
-  avgDay: number;
-  avgNight: number;
-  conditions?: WeatherCode;
+  weatherForecast: IWeatherDay;
   onClick(date: string): void;
 }
 
 export default function UiWeekday({
   isActive,
-  date,
-  avgDay,
-  avgNight,
-  conditions,
+  weatherForecast,
   onClick = () => {},
 }: IProps) {
+  const { date, weatherCode, temperatureDay, temperatureNight } =
+    weatherForecast;
+
   return (
     <button
       className={classNames(styles.weekday, { [styles.isActive]: isActive })}
@@ -28,13 +24,15 @@ export default function UiWeekday({
     >
       <div>{date.format("ddd")}</div>
       <img
-        src={getConditionsIcon(conditions)}
+        src={getConditionsIcon(weatherCode)}
         alt="conditions"
         className={styles.conditionsIcon}
       />
       <div className={styles.averageTemperature}>
-        <div className={styles.averageTemperatureDay}>{avgDay}°</div>
-        <div className={styles.averageTemperatureNight}>{avgNight}°</div>
+        <div className={styles.averageTemperatureDay}>{temperatureDay}°</div>
+        <div className={styles.averageTemperatureNight}>
+          {temperatureNight}°
+        </div>
       </div>
     </button>
   );

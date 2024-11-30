@@ -4,27 +4,24 @@ import { IWeatherDay } from "@/interfaces";
 import styles from "./styles.module.css";
 
 interface IProps {
-  data: IWeatherDay[];
+  weatherForecast: IWeatherDay[];
   selectedDate: Dayjs;
-  onSelectedDateChange(date: Dayjs): void;
+  onDateChange(date: Dayjs): void;
 }
 
 export default function UiWeek({
-  data,
+  weatherForecast,
   selectedDate,
-  onSelectedDateChange = () => {},
+  onDateChange = () => {},
 }: IProps) {
   return (
     <div className={styles.week}>
-      {data.map(({ date, temperatureDay, temperatureNight, weatherCode }) => (
+      {weatherForecast.map((weatherForecast) => (
         <UiWeekday
-          key={date.unix()}
-          date={date}
-          avgDay={temperatureDay}
-          avgNight={temperatureNight}
-          conditions={weatherCode}
-          onClick={() => onSelectedDateChange(date)}
-          isActive={dayjs(selectedDate).isSame(date, "day")}
+          key={weatherForecast.date.unix()}
+          weatherForecast={weatherForecast}
+          isActive={dayjs(selectedDate).isSame(weatherForecast.date, "day")}
+          onClick={() => onDateChange(weatherForecast.date)}
         />
       ))}
     </div>
