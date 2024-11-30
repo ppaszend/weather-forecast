@@ -27,7 +27,7 @@ export default function UiDailyDetails({
   dailyForecast,
 }: IProps) {
   const [selectedHour, setSelectedHour] = useState<dayjs.Dayjs>();
-  const [activeTab, setActiveTab] = useState<Tab>(Tab.PRECIPITATION);
+  const [activeTab, setActiveTab] = useState<Tab>(Tab.TEMPERATURE);
 
   const shouldUseSelectedHour =
     selectedHour && dailyForecast.date.isSame(selectedHour, "day");
