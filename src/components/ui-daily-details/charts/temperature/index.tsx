@@ -12,6 +12,10 @@ const TOP_OFFSET = 20;
 const BOTTOM_OFFSET = 10;
 const innerHeight = HEIGHT - TOP_OFFSET - BOTTOM_OFFSET;
 
+function relativeSize(value: number) {
+  return value * (window.devicePixelRatio || 1);
+}
+
 const COLORS = {
   stroke: "#ffcc00",
   fill: "#4c4219",
@@ -25,6 +29,7 @@ export default function TemperatureChart({ hourlyForecast }: IProps) {
 
   const drawChart = useCallback(
     (hourlyForecast: IWeatherHour[], width: number) => {
+      if (!canvasRef.current) return;
       const ctx = canvasRef.current?.getContext("2d");
       if (!ctx) return;
 
@@ -32,21 +37,25 @@ export default function TemperatureChart({ hourlyForecast }: IProps) {
       const maxTemp = Math.max(...hourlyForecast.map((w) => w.temperature));
       const tempDiff = maxTemp - minTemp;
 
+      const pixelWidth = relativeSize(width);
+      const pixelHeight = relativeSize(HEIGHT);
+      const pixelInnerHeight = relativeSize(innerHeight);
+
       ctx.reset();
       ctx.strokeStyle = COLORS.stroke;
       ctx.fillStyle = COLORS.text;
-      ctx.lineWidth = 3;
+      ctx.lineWidth = relativeSize(3);
       ctx.beginPath();
 
       function calcX(index: number) {
-        return (index / (hourlyForecast.length - 1)) * width;
+        return (index / (hourlyForecast.length - 1)) * pixelWidth;
       }
 
       function calcY(temperature: number) {
         return (
           0 -
-          ((temperature - minTemp) / tempDiff) * innerHeight +
-          (HEIGHT - BOTTOM_OFFSET)
+          ((temperature - minTemp) / tempDiff) * pixelInnerHeight +
+          (pixelHeight - BOTTOM_OFFSET)
         );
       }
 
@@ -77,21 +86,23 @@ export default function TemperatureChart({ hourlyForecast }: IProps) {
             region.lineTo(calcX(index), calcY(temperature));
           }
         });
-        region.lineTo(width, HEIGHT);
-        region.lineTo(0, HEIGHT);
+        region.lineTo(pixelWidth, pixelHeight);
+        region.lineTo(0, pixelHeight);
         region.closePath();
         ctx.fill(region);
       }
 
       function drawTexts(ctx: CanvasRenderingContext2D) {
         ctx.fillStyle = COLORS.text;
+        console.log(ctx.font);
+        ctx.font = `${relativeSize(12)}px sans-serif`;
 
         hourlyForecast.map(({ temperature }, index) => {
           if ((index + 2) % 3 === 0) {
             ctx.fillText(
               temperature.toFixed(),
               calcX(index),
-              calcY(temperature) - 10,
+              calcY(temperature) - relativeSize(8),
             );
           }
         });
@@ -100,6 +111,7 @@ export default function TemperatureChart({ hourlyForecast }: IProps) {
       drawStroke(ctx);
       drawFill(ctx);
       drawTexts(ctx);
+      ctx.scale(relativeSize(1), relativeSize(1));
     },
     [],
   );
@@ -118,7 +130,15 @@ export default function TemperatureChart({ hourlyForecast }: IProps) {
 
   return (
     <div ref={wrapperRef}>
-      <canvas width={wrapperWidth} height={HEIGHT} ref={canvasRef} />
+      <canvas
+        width={relativeSize(wrapperWidth)}
+        height={relativeSize(HEIGHT)}
+        style={{
+          width: `${wrapperWidth}px`,
+          height: `${HEIGHT}px`,
+        }}
+        ref={canvasRef}
+      />
     </div>
   );
 }
