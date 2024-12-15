@@ -3,7 +3,7 @@
 - ~~Styling scroll on weekdays~~ 👍
 - ~~Fixed height for all charts~~ 👍
 - ~~Wind icon size by wind speed~~ 👍
-- ~~Texts and icons for weather conditions~~ 👍 (I can't find icon for thunderstorm)
+- ~~Texts and icons for weather conditions~~ 👍
 - ~~Temperature for day/night~~ 👍
 - ~~Changing unit Celsius and Fahrenheit~~ 👍
 - ~~Scrolling charts on mobile~~ 👍
