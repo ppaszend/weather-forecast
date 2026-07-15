@@ -27,4 +27,4 @@
 
 - ~~Move API key to env~~ 👍
 - ~~Line breaks~~ 👍
-- Use tanstack/query for all API requests (https://tanstack.com/query/v4/docs/framework/react/guides/queries)
+- ~~Use tanstack/query for all API requests (https://tanstack.com/query/v4/docs/framework/react/guides/queries)~~ 👍
