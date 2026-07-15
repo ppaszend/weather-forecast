@@ -10,6 +10,7 @@ export default function useCitySearch({ searchQuery }: IProps) {
     queryKey: ['search', searchQuery],
     queryFn: ({ signal }) => getLocationsByQuery(searchQuery, signal),
     enabled: searchQuery.length >= 2,
+    staleTime: 60 * 1000,
   });
 
   return { results: query.data ?? [] };
