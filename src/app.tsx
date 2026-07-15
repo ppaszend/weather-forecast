@@ -4,6 +4,9 @@ import { UiLocationSearch, UiWeather } from "@/components";
 import { useWeatherData } from "@/hooks";
 import { temperatureUnit } from "@/types";
 import { ILocation } from "@/interfaces";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 export default function App() {
   const [location, setLocation] = useState<ILocation>();
@@ -16,13 +19,15 @@ export default function App() {
   });
 
   return (
-    <TemperatureContext.Provider
-      value={{ temperatureUnit, setTemperatureUnit }}
-    >
-      <div className="app">
-        <UiLocationSearch location={location} onLocationChange={setLocation} />
-        <UiWeather isLoading={isLoading} weatherData={weatherData} />
-      </div>
-    </TemperatureContext.Provider>
+    <QueryClientProvider client={queryClient}>
+      <TemperatureContext.Provider
+        value={{ temperatureUnit, setTemperatureUnit }}
+      >
+        <div className="app">
+          <UiLocationSearch location={location} onLocationChange={setLocation} />
+          <UiWeather isLoading={isLoading} weatherData={weatherData} />
+        </div>
+      </TemperatureContext.Provider>
+    </QueryClientProvider>
   );
 }

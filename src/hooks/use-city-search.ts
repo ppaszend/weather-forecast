@@ -1,17 +1,16 @@
-import { useEffect, useState } from "react";
-import { ILocation } from "@/interfaces";
 import { getLocationsByQuery } from "@/api";
+import { useQuery } from "@tanstack/react-query";
 
 interface IProps {
   searchQuery: string;
 }
 
 export default function useCitySearch({ searchQuery }: IProps) {
-  const [results, setResults] = useState<ILocation[]>([]);
+  const query = useQuery({
+    queryKey: ['search', searchQuery],
+    queryFn: ({ signal }) => getLocationsByQuery(searchQuery, signal),
+    enabled: searchQuery.length >= 2,
+  });
 
-  useEffect(() => {
-    getLocationsByQuery(searchQuery).then(setResults);
-  }, [searchQuery]);
-
-  return { results };
+  return { results: query.data ?? [] };
 }

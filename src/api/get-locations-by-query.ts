@@ -65,6 +65,7 @@ interface IResponse {
 
 export default function getLocationsByQuery(
   query: string,
+  signal?: AbortSignal,
 ): Promise<ILocation[]> {
   return new Promise((resolve, reject) => {
     if (query.length < 3) {
@@ -83,7 +84,7 @@ export default function getLocationsByQuery(
       "https://api.geoapify.com/v1/geocode/autocomplete?" + searchParams,
     );
 
-    fetch(url)
+    fetch(url, { signal })
       .then((res) => res.json())
       .then((data: IResponse) => {
         resolve(
